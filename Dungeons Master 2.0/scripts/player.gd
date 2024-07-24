@@ -3,20 +3,27 @@ extends CharacterBody2D
 @export var movement_speed : float = 100
 @onready var animated_sprite = $Sprite2D
 @onready var animation_player = $AnimationPlayer
+@onready var animation_tree = $AnimationTree
+
+var direction : Vector2 = Vector2.ZERO
 
 func _ready():
-	animation_player.play("Idle")
+	animation_tree.active = true
+	# animation_player.play("Idle")
 	face_right()
 
-func play_running_animation():
-	animated_sprite.find_child("Body").hframes = 6
-	animated_sprite.find_child("Body").vframes = 2
-	animation_player.play("Running")
-
-func play_idle_animation():
-	animated_sprite.find_child("Body").hframes = 4
-	animated_sprite.find_child("Body").vframes = 1
-	animation_player.play("Idle")
+func update_animation_parameters():
+	if velocity == Vector2.ZERO:
+		animation_tree["parameters/conditions/idle"] = true
+		animation_tree["parameters/conditions/is_moving"] = false
+	else:
+		animation_tree["parameters/conditions/is_moving"] = true
+		animation_tree["parameters/conditions/idle"] = false
+	
+	# If adding different animations for up down left right , careful here !
+	animation_tree["parameters/Idle/blend_position"] = direction
+	animation_tree["parameters/Running/blend_position"] = direction
+	
 
 func face_left():
 	animated_sprite.find_child("Body").flip_h = true
@@ -34,6 +41,7 @@ func _physics_process(delta):
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
 		Input.get_action_strength("down") - Input.get_action_strength("up"),
 	)
+	direction = input_direction
 	
 	# Update velocity
 	var movement_scaling_factor = 1.0
@@ -51,10 +59,7 @@ func _physics_process(delta):
 		face_right()
 		
 	# Play the correct animation
-	if input_direction != Vector2(0, 0):
-		play_running_animation()
-	else:
-		play_idle_animation()
+	update_animation_parameters()
 	
 	# Move and Slide function uses velocity of character body to move around the map
 	move_and_slide()
