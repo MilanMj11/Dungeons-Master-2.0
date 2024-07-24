@@ -21,8 +21,8 @@ func update_animation_parameters():
 		animation_tree["parameters/conditions/idle"] = false
 	
 	# If adding different animations for up down left right , careful here !
-	animation_tree["parameters/Idle/blend_position"] = direction
-	animation_tree["parameters/Running/blend_position"] = direction
+	# animation_tree["parameters/Idle/blend_position"] = direction
+	# animation_tree["parameters/Running/blend_position"] = direction
 	
 
 func face_left():
