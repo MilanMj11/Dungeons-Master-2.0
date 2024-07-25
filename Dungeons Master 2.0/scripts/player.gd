@@ -1,14 +1,19 @@
 extends CharacterBody2D
 
+const WALL_ZIndex = -14
+
 @export var movement_speed : float = 100
-@onready var animated_sprite = $Sprite2D
+@onready var sprite = $Sprite2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
+@onready var layer_detection = $LayerDetection
+@onready var lobby = %Lobby
 
 var direction : Vector2 = Vector2.ZERO
 
 func _ready():
 	animation_tree.active = true
+	sprite.z_index = 0
 	# animation_player.play("Idle")
 	face_right()
 
@@ -24,16 +29,18 @@ func update_animation_parameters():
 	# animation_tree["parameters/Idle/blend_position"] = direction
 	# animation_tree["parameters/Running/blend_position"] = direction
 	
+func _process(delta):
+	pass
 
 func face_left():
-	animated_sprite.find_child("Body").flip_h = true
-	animated_sprite.find_child("Hand1").z_index = -2
-	animated_sprite.find_child("Hand2").z_index = 0
+	sprite.find_child("Body").flip_h = true
+	sprite.find_child("Hand1").z_index = sprite.find_child("Body").z_index - 2
+	sprite.find_child("Hand2").z_index = sprite.find_child("Body").z_index
 
 func face_right():
-	animated_sprite.find_child("Body").flip_h = false
-	animated_sprite.find_child("Hand1").z_index = 0
-	animated_sprite.find_child("Hand2").z_index = -2
+	sprite.find_child("Body").flip_h = false
+	sprite.find_child("Hand1").z_index = sprite.find_child("Body").z_index
+	sprite.find_child("Hand2").z_index = sprite.find_child("Body").z_index - 2
 
 func _physics_process(delta):
 	# Get the input direction
@@ -63,3 +70,5 @@ func _physics_process(delta):
 	
 	# Move and Slide function uses velocity of character body to move around the map
 	move_and_slide()
+
+

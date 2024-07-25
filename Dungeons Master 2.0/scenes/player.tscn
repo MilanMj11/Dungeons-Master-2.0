@@ -1,9 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://i7q8fu1b5txt"]
+[gd_scene load_steps=25 format=3 uid="uid://i7q8fu1b5txt"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ce630"]
 [ext_resource type="Texture2D" uid="uid://ccqt8oty6jvmq" path="res://Assets/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Idle/Idle-Sheet.png" id="1_eii55"]
 [ext_resource type="Texture2D" uid="uid://dat56fjcqxir1" path="res://Assets/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Run/Run-Sheet.png" id="2_cwyi2"]
 [ext_resource type="Texture2D" uid="uid://cbvw4gx1f03y2" path="res://Assets/Pixel Crawler - FREE - 1.8/Weapons/Hands/Hands.png" id="3_lob4m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_otido"]
+size = Vector2(42.5, 40.5)
 
 [sub_resource type="Animation" id="Animation_5s8ex"]
 resource_name = "Idle"
@@ -360,10 +363,17 @@ graph_offset = Vector2(-241, -41)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hse2x"]
 radius = 7.0
-height = 26.0
+height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
 script = ExtResource("1_ce630")
+
+[node name="LayerDetection" type="Area2D" parent="."]
+position = Vector2(0, -13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LayerDetection"]
+shape = SubResource("RectangleShape2D_otido")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -378,30 +388,37 @@ parameters/conditions/is_moving = false
 parameters/Idle/blend_position = Vector2(-0.00113505, 0.0128756)
 parameters/Running/blend_position = Vector2(-0.343927, -0.27897)
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -13)
-shape = SubResource("CapsuleShape2D_hse2x")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -13)
 zoom = Vector2(4, 4)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 
 [node name="Body" type="Sprite2D" parent="Sprite2D"]
+y_sort_enabled = true
 position = Vector2(0, -16)
 texture = ExtResource("1_eii55")
 hframes = 4
 
 [node name="Hand1" type="Sprite2D" parent="Sprite2D"]
+y_sort_enabled = true
 position = Vector2(-10, -10)
 texture = ExtResource("3_lob4m")
 hframes = 2
 vframes = 4
 
 [node name="Hand2" type="Sprite2D" parent="Sprite2D"]
+y_sort_enabled = true
 position = Vector2(11, -11)
 texture = ExtResource("3_lob4m")
 hframes = 2
 vframes = 4
 frame = 1
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+position = Vector2(1, -7)
+shape = SubResource("CapsuleShape2D_hse2x")
