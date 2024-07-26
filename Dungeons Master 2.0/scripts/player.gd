@@ -7,7 +7,6 @@ const WALL_ZIndex = -14
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 @onready var layer_detection = $LayerDetection
-@onready var lobby = %Lobby
 
 var direction : Vector2 = Vector2.ZERO
 
