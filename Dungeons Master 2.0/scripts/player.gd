@@ -44,6 +44,7 @@ func update_animation_parameters():
 		animation_tree["parameters/Idle/blend_position"] = direction - Vector2(-facing_direction, 0)
 		animation_tree["parameters/Idle_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
 		animation_tree["parameters/Running/blend_position"] = direction - Vector2(-facing_direction, 0)
+		animation_tree["parameters/Running_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
 		#print(direction - Vector2(-facing_direction, 0))
 	
 func _process(delta):

@@ -5377,6 +5377,7 @@ script = ExtResource("1_cph26")
 [node name="Player" parent="." instance=ExtResource("1_wcghh")]
 z_index = -12
 position = Vector2(53, 673)
+safezone = true
 
 [node name="Tilemap" type="TileMap" parent="."]
 unique_name_in_owner = true
