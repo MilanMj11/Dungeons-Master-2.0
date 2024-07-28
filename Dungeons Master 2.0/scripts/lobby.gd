@@ -5,6 +5,13 @@ extends Node2D
 @onready var animation_player = $AnimationPlayer
 
 
+func _ready():
+	# Precaution intializers
+	player.z_index = 0
+	
+	# Lobby specific information
+	player.safezone = true
+
 func _on_dungeon_entrance_body_entered(body):
 	# When the player enters the Dungeon Entrance Zone ->
 	# print("ok")

@@ -22,7 +22,7 @@ var facing_direction : int = -1 # 1 for right , -1 for left
 func _ready():
 	animation_tree.active = true
 	# animation_tree["parameters/conditions/in_safezone"] = true
-	sprite.z_index = 0
+	body.z_index = 0
 
 func update_animation_parameters():
 	if safezone == true:	
@@ -51,6 +51,7 @@ func _process(delta):
 	pass
 
 func _physics_process(delta):
+	# print(body.z_index)
 	# Get the input direction
 	var input_direction = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
