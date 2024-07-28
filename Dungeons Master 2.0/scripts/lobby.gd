@@ -11,6 +11,7 @@ func _ready():
 	
 	# Lobby specific information
 	player.safezone = true
+	player.y_sort_enabled = true
 
 func _on_dungeon_entrance_body_entered(body):
 	# When the player enters the Dungeon Entrance Zone ->
