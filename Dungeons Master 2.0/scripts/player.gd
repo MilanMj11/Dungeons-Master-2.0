@@ -7,12 +7,12 @@ const WALL_ZIndex = -14
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var layer_detection : Area2D = $LayerDetection
-@onready var sword : Sprite2D = $Sword
 
 
 @onready var hand1 : Sprite2D = sprite.find_child("Hand1")
 @onready var hand2 : Sprite2D = sprite.find_child("Hand2")
 @onready var body : Sprite2D = sprite.find_child("Body")
+@onready var sword : Sprite2D = sprite.find_child("Sword")
 
 @export var safezone : bool = true
 

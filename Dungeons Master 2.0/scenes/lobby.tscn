@@ -5278,6 +5278,7 @@ texture = ExtResource("5_18e1l")
 
 [sub_resource type="TileSet" id="TileSet_e6wg4"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_bf1kk")
 sources/1 = SubResource("TileSetAtlasSource_ceg87")
 sources/2 = SubResource("TileSetAtlasSource_8rkb7")
@@ -5411,6 +5412,7 @@ layer_5/tile_data = PackedInt32Array(1507335, 917506, 3, 262156, 65538, 0, 32769
 
 [node name="DungeonEntrance" type="Area2D" parent="."]
 position = Vector2(52, 852)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DungeonEntrance"]
 shape = SubResource("RectangleShape2D_pc536")
