@@ -46,7 +46,11 @@ func update_animation_parameters():
 		animation_tree["parameters/Running/blend_position"] = direction - Vector2(-facing_direction, 0)
 		animation_tree["parameters/Running_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
 		#print(direction - Vector2(-facing_direction, 0))
-	
+
+func update_facing_direction():
+	if direction.x != 0:
+		facing_direction = direction.x
+
 func _process(delta):
 	pass
 
@@ -66,9 +70,7 @@ func _physics_process(delta):
 		
 	velocity = input_direction * movement_speed * movement_scaling_factor
 	
-	# Update facing direction
-	if input_direction.x != 0:
-		facing_direction = input_direction.x
+	update_facing_direction()
 	
 	# Play the correct animation
 	update_animation_parameters()
