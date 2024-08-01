@@ -57,13 +57,13 @@ func update_animation_parameters():
 		animation_tree["parameters/conditions/idle"] = false
 
 	# Direction of the played animation
-	if direction != Vector2.ZERO:
-		animation_tree["parameters/Idle/blend_position"] = direction - Vector2(-facing_direction, 0)
-		#animation_tree["parameters/Idle_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
-		animation_tree["parameters/Running/blend_position"] = direction - Vector2(-facing_direction, 0)
-		#animation_tree["parameters/Running_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
-		animation_tree["parameters/Attack/blend_position"] = direction - Vector2(-facing_direction, 0)
-		#print(direction - Vector2(-facing_direction, 0))
+	#if direction != Vector2.ZERO:
+	animation_tree["parameters/Idle/blend_position"] = direction - Vector2(-facing_direction, 0)
+	#animation_tree["parameters/Idle_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
+	animation_tree["parameters/Running/blend_position"] = direction - Vector2(-facing_direction, 0)
+	#animation_tree["parameters/Running_with_weapon/blend_position"] = direction - Vector2(-facing_direction, 0)
+	animation_tree["parameters/Attack/blend_position"] = direction - Vector2(-facing_direction, 0)
+	#print(direction - Vector2(-facing_direction, 0))
 
 func check_to_see_player():
 
@@ -89,10 +89,15 @@ func _on_sight_body_exited(body):
 func _process(delta):
 	pass
 
+func update_facing_direction():
+	if direction.x != 0:
+		facing_direction = direction.x
+
 func initiate_attack():
 	is_attacking = true
 	attack_timer.one_shot = true
 	attack_timer.start(0.8)
+
 
 func _physics_process(delta):
 
@@ -101,7 +106,10 @@ func _physics_process(delta):
 	
 	player_position = player.position
 	check_to_see_player()
-	
+
+	# Update the facing direction
+	update_facing_direction()
+
 	# Update animation parameters
 	update_animation_parameters()
 	
@@ -128,6 +136,7 @@ func _physics_process(delta):
 	else:
 		if !is_attacking:
 			initiate_attack()
+
 	
 	
 func _on_random_movement_timer_timeout():
