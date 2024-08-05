@@ -25,7 +25,7 @@ var direction : Vector2 = Vector2.ZERO
 var attack_direction : Vector2 = Vector2.ZERO
 var facing_direction : int = -1 # 1 for right , -1 for left
 var is_attacking : bool = false
-var attacking_animation : bool = false
+var attacking_cooldown : bool = false
 
 
 func _ready():
@@ -36,7 +36,7 @@ func _ready():
 func update_animation_parameters():
 	
 	# Attacking
-	if attacking_animation:
+	if is_attacking:
 		animation_tree["parameters/conditions/is_attacking"] = true
 	else:
 		animation_tree["parameters/conditions/is_attacking"] = false
@@ -80,7 +80,7 @@ func update_facing_direction():
 		facing_direction = direction.x
 
 func swing(mouse_pos : Vector2):
-	if !is_attacking:
+	if !attacking_cooldown:
 		# Animation Attack Timer 
 		attack_timer.one_shot = true
 		attack_timer.start(0.4)
@@ -88,8 +88,8 @@ func swing(mouse_pos : Vector2):
 		attack_speed_timer.one_shot = true
 		attack_speed_timer.start(attack_speed)
 		
+		attacking_cooldown = true
 		is_attacking = true
-		attacking_animation = true
 		
 		attack_direction = (mouse_pos - position).normalized()
 		# print(attack_direction)
@@ -100,10 +100,10 @@ func _process(delta):
 		swing(mouse_pos)
 
 func _on_attack_timer_timeout():
-	attacking_animation = false
+	is_attacking = false
 	
 func _on_attack_speed_timeout():
-	is_attacking = false
+	attacking_cooldown = false
 
 func _physics_process(delta):
 	# print(body.z_index)

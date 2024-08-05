@@ -6,12 +6,14 @@ extends CharacterBody2D
 
 @onready var player : CharacterBody2D = get_parent().get_node("Player")
 @onready var tilemap = get_parent().get_node("TileMap")
+@onready var health_component = $HealthComponent
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var animation_player = $AnimationPlayer
 @onready var attack_timer = $AttackComponent/AttackTimer
 
 @onready var sprite = $Sprite2D
+@onready var health_bar = $HealthBar
 
 
 @onready var Hand1 : Sprite2D = sprite.find_child("Hand1")
@@ -100,9 +102,14 @@ func initiate_attack():
 	attack_timer.one_shot = true
 	attack_timer.start(attack_speed)
 
+func update_healthbar():
+	health_bar.max_value = health_component.MAX_HEALTH
+	health_bar.value = health_component.health
 
 func _physics_process(delta):
-
+	
+	update_healthbar()
+	
 	if attack_timer.time_left == 0:
 		is_attacking = false
 	

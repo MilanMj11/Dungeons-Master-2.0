@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://u30f03kncasb"]
+[gd_scene load_steps=40 format=3 uid="uid://u30f03kncasb"]
 
 [ext_resource type="Script" path="res://scripts/mummy.gd" id="1_4xkns"]
 [ext_resource type="Texture2D" uid="uid://d8nh6d8xutnc" path="res://Assets/Desert/Mummy - Base/Idle/Idle-Sheet.png" id="1_i88gj"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d11ap6frhuw8x" path="res://scenes/attack_component.tscn" id="3_yk4yf"]
 [ext_resource type="PackedScene" uid="uid://cnavkr82y2qgg" path="res://scenes/health_component.tscn" id="6_thpca"]
 [ext_resource type="PackedScene" uid="uid://613qa45r30b8" path="res://scenes/hitbox_component.tscn" id="7_g77go"]
+[ext_resource type="Script" path="res://scripts/health_bar.gd" id="9_lo0wm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rvu45"]
 radius = 17.1172
@@ -1440,6 +1441,12 @@ radius = 6.08276
 [sub_resource type="CircleShape2D" id="CircleShape2D_dnarc"]
 radius = 233.009
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bryhi"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qie8g"]
+bg_color = Color(0, 1, 0, 1)
+
 [node name="Mummy" type="CharacterBody2D"]
 z_as_relative = false
 y_sort_enabled = true
@@ -1537,6 +1544,17 @@ position = Vector2(-4, -20)
 target_position = Vector2(-100, 0)
 
 [node name="RandomMovementTimer" type="Timer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("HEALTH_COMPONENT")]
+offset_left = -11.0
+offset_top = 2.0
+offset_right = 11.0
+offset_bottom = 4.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bryhi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qie8g")
+show_percentage = false
+script = ExtResource("9_lo0wm")
+HEALTH_COMPONENT = NodePath("../HealthComponent")
 
 [connection signal="body_entered" from="Sight" to="." method="_on_sight_body_entered"]
 [connection signal="body_exited" from="Sight" to="." method="_on_sight_body_exited"]
