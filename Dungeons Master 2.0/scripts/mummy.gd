@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @export var movement_speed = 50
 
+@onready var attack_speed : float = 0.8
+
 @onready var player : CharacterBody2D = get_parent().get_node("Player")
 @onready var tilemap = get_parent().get_node("TileMap")
 
@@ -96,7 +98,7 @@ func update_facing_direction():
 func initiate_attack():
 	is_attacking = true
 	attack_timer.one_shot = true
-	attack_timer.start(0.8)
+	attack_timer.start(attack_speed)
 
 
 func _physics_process(delta):
