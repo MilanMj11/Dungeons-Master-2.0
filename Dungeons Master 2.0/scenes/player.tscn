@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://i7q8fu1b5txt"]
+[gd_scene load_steps=52 format=3 uid="uid://i7q8fu1b5txt"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ce630"]
 [ext_resource type="Texture2D" uid="uid://ccqt8oty6jvmq" path="res://Assets/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Idle/Idle-Sheet.png" id="1_eii55"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://613qa45r30b8" path="res://scenes/hitbox_component.tscn" id="3_4s6cn"]
 [ext_resource type="Texture2D" uid="uid://cbvw4gx1f03y2" path="res://Assets/Pixel Crawler - FREE - 1.8/Weapons/Hands/Hands.png" id="3_lob4m"]
 [ext_resource type="Texture2D" uid="uid://c4pq8nkcbfe4k" path="res://Assets/Weapons/WoodSword.png" id="5_8buyf"]
+[ext_resource type="Script" path="res://scripts/Weapon.gd" id="7_ik1s0"]
 [ext_resource type="PackedScene" uid="uid://d11ap6frhuw8x" path="res://scenes/attack_component.tscn" id="8_luoi0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hse2x"]
@@ -204,6 +205,30 @@ tracks/14/keys = {
 "update": 1,
 "values": [false, false]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Sprite2D/Hand1:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Sprite2D/Hand2:rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
 
 [sub_resource type="Animation" id="Animation_5s8ex"]
 resource_name = "Idle_right"
@@ -388,6 +413,30 @@ tracks/14/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Sprite2D/Hand1:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Sprite2D/Hand2:rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_722vs"]
@@ -2229,6 +2278,8 @@ MAX_HEALTH = 150
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("HEALTH_COMPONENT") instance=ExtResource("3_4s6cn")]
 visible = false
+collision_layer = 2
+collision_mask = 4
 HEALTH_COMPONENT = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
@@ -2294,8 +2345,9 @@ frame = 3
 [node name="Hand1" type="Sprite2D" parent="Sprite2D"]
 z_index = -2
 y_sort_enabled = true
-position = Vector2(-9, -8)
+position = Vector2(8, -10)
 texture = ExtResource("3_lob4m")
+flip_h = true
 hframes = 2
 vframes = 4
 frame = 2
@@ -2304,6 +2356,7 @@ frame = 2
 z_index = -3
 position = Vector2(12, -19.5)
 rotation = 1.28631
+script = ExtResource("7_ik1s0")
 
 [node name="Sword" type="Sprite2D" parent="Weapon"]
 z_index = -3
@@ -2322,6 +2375,8 @@ ATTACK_DAMAGE = 50
 visible = false
 position = Vector2(1.13687e-13, -2)
 scale = Vector2(1, 1)
+collision_layer = 8
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon/Hitbox"]
 position = Vector2(-3.8147e-06, 0)
@@ -2329,3 +2384,4 @@ shape = SubResource("RectangleShape2D_5s07i")
 
 [connection signal="timeout" from="Weapon/AttackComponent/AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="Weapon/AttackComponent/AttackSpeed" to="." method="_on_attack_speed_timeout"]
+[connection signal="area_entered" from="Weapon/Hitbox" to="Weapon" method="_on_hitbox_area_entered"]
