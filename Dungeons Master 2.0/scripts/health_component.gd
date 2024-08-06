@@ -10,7 +10,12 @@ func _ready():
 func die():
 	get_parent().queue_free()
 
-func take_damage(damage : float):
+func take_damage_nr(damage : float):
 	health -= damage
+	if health <= 0:
+		die()
+
+func take_damage(attack : AttackComponent):
+	health -= attack.damage
 	if health <= 0:
 		die()

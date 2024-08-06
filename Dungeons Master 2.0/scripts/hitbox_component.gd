@@ -5,4 +5,4 @@ class_name HitboxComponent
 
 func get_damage(attack: AttackComponent):
 	if HEALTH_COMPONENT:
-		HEALTH_COMPONENT.take_damage(attack.damage)
+		HEALTH_COMPONENT.take_damage(attack)

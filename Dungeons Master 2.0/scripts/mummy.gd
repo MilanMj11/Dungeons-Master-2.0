@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var player : CharacterBody2D = get_parent().get_node("Player")
 @onready var tilemap = get_parent().get_node("TileMap")
 @onready var health_component = $HealthComponent
+@onready var attack_component = $AttackComponent
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var animation_player = $AnimationPlayer
@@ -31,6 +32,7 @@ var direction : Vector2
 var see_player : bool = false
 var player_in_sight_area : bool = false
 var is_attacking : bool = false
+var attack_successful : bool = false
 
 func raycast_vision_initializer():
 	raycast.enabled = true
@@ -143,8 +145,14 @@ func _physics_process(delta):
 	if position.distance_to(player_position) > 20:
 		move_and_slide()
 	else:
+		# print(attack_successful)
 		if !is_attacking:
+			attack_successful = false
 			initiate_attack()
+		if attack_timer.time_left <= attack_speed * 0.75 and attack_successful == false:
+			player.find_child("HealthComponent").take_damage(attack_component)
+			attack_successful = true
+	
 
 	
 	
